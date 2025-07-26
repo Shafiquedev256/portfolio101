@@ -1,6 +1,6 @@
 import { MetadataRoute } from "next";
 
-const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
+const baseUrl = "https://www.shafiquedev256.tech";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   return [
