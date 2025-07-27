@@ -7,7 +7,7 @@ const FooterSection = () => {
         <footer className=' rounded-t-lg shadow mx-4 bg-gray-800'>
           <div className='w-full mx-auto max-w-screen-xl p-4 md:flex md:items-center md:justify-between'>
             <span className='text-sm  sm:text-center text-gray-400'>
-              © 2025{" "}
+              © {new Date().getFullYear()}{" "}
               <Link href={"/"} className='hover:underline'>
                 Shafiq
               </Link>
