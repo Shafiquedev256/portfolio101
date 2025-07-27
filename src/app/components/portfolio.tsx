@@ -120,7 +120,6 @@ const PortfolioCard = ({
               {title}
             </h3>
             <Link
-              target='blank'
               href={buttonHref}
               className='text-body-color dark:text-dark-6 hover:border-green-500 hover:bg-green-500 inline-block rounded-md border border-stroke border-green-500  py-[10px] px-7 text-sm font-medium transition hover:text-white'
             >
