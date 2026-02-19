@@ -17,13 +17,13 @@ const HeroSection = () => {
           <div className='w-full pb-10 relative'>
             <img
               className='shadow-2xl imgbg bg-green-400/30 shadow-green-600  absolute left-0 right-0 rounded-full lg:max-w-[70%] max-w-[60%] mx-auto'
-              src='/me.png'
+              src='/image_1_1771506558959.jpg'
               alt='My Image'
             />
             <img
               className='relative z-10  rounded-full lg:max-w-[70%] max-w-[60%] mx-auto  outline-[.7rem] outline-offset-[.1rem] outline-green-400/30'
-              src='/me.png'
-              alt='My Image'
+              src='/image_1_1771506558959.jpg'
+              alt='image_1_1771506558959.jpg'
             />
           </div>
           <div className='w-full  font-body flex flex-col justify-center gap-4 md:text-left text-center text-white  md:mt-0 sm:mt-8 mt-4'>

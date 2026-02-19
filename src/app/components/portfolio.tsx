@@ -1,133 +1,141 @@
 "use client";
-import { useScroll, motion, useTransform } from "motion/react";
-import Link from "next/link";
-import { useRef } from "react";
-
-const Portfolio = () => {
-  const ref = useRef<HTMLDivElement>(null);
-  const { scrollYProgress } = useScroll({
-    target: ref,
-    offset: ["0 1", "1.1 1"],
-  });
-  const scaleProgress = useTransform(scrollYProgress, [0, 1], [0.8, 1]);
-  const opacityProgress = useTransform(scrollYProgress, [0, 1], [0.5, 1]);
+import { useState, useRef } from "react";
+const projects = [
+  {
+    title: "WIZZ GYM",
+    client: "Fitness Center",
+    image: "/wizzgym.png",
+    url: "www.wizzgym.com",
+    tags: ["Next js", "Tailwind CSS ", "SEO", "UI/UX Design"],
+  },
+  {
+    title: "SITI GYM",
+    client: "Fitness Center",
+    image: "/siti-gym.png",
+    url: "www.sitigym.com",
+    tags: ["Next js", "Tailwind CSS ", "SEO", "UI/UX Design"],
+  },
+  {
+    title: "PROSELLER",
+    client: "Bussiness Uganda",
+    image: "/proseller.png",
+    url: "https://production102.vercel.app/",
+    tags: ["Dashboard", "Admin Panel", "payment Integration"],
+  },
+  {
+    title: "WEDDING WEBSITE",
+    client: "PRIVATE",
+    image: "/wedding.png",
+    url: "https://wedding101.vercel.app/",
+    tags: ["Design", "Responsive", "Form Integration"],
+  },
+];
+export default function ProjectsSection() {
+  const [activeIndex, setActiveIndex] = useState(0);
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
+  const scrollToProject = (index: number) => {
+    setActiveIndex(index);
+    if (scrollContainerRef.current) {
+      const container = scrollContainerRef.current;
+      const cardWidth =
+        container.querySelector(".project-card")?.clientWidth || 0;
+      const gap = 16; // gap-4 = 16px
+      const scrollPosition = (cardWidth + gap) * index;
+      container.scrollTo({
+        left: scrollPosition,
+        behavior: "smooth",
+      });
+    }
+  };
+  const handleScroll = () => {
+    if (scrollContainerRef.current) {
+      const container = scrollContainerRef.current;
+      const cardWidth =
+        container.querySelector(".project-card")?.clientWidth || 0;
+      const gap = 16;
+      const scrollLeft = container.scrollLeft;
+      const newIndex = Math.round(scrollLeft / (cardWidth + gap));
+      setActiveIndex(newIndex);
+    }
+  };
   return (
-    <>
-      <section className=' pb-12 lg:pt-[120px] lg:pb-[90px] text-white font-body'>
-        <div className='container mx-auto'>
-          <div className='flex flex-wrap -mx-4'>
-            <div className='w-full flex flex-col justify-center items-center px-4'>
-              <motion.div
-                ref={ref}
-                style={{
-                  scale: scaleProgress,
-                  opacity: opacityProgress,
-                }}
-                className=' mb-[60px] max-w-[510px] text-center'
+    <section id='projects'>
+      <div className='bg-gray-900  py-16 md:py-24 px-0'>
+        <div className='max-w-7xl mx-auto'>
+          <div className='mb-12 md:mb-16 px-6 md:px-8'>
+            <p className='text-white text-xs md:text-sm font-semibold tracking-widest uppercase mb-3 md:mb-4'>
+              OUR WORK
+            </p>
+            <h2 className='text-green-500 text-3xl md:text-4xl lg:text-5xl font-bold'>
+              PROJECTS PORTFOLIO
+            </h2>
+          </div>
+          <div
+            ref={scrollContainerRef}
+            onScroll={handleScroll}
+            className='flex gap-4 overflow-x-auto snap-x snap-mandatory overflow-y-scroll [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none] px-6 md:px-8 pb-4'
+          >
+            {projects.map((project, index) => (
+              <div
+                key={index}
+                className='project-card flex-shrink-0 w-[85vw] md:w-[400px] snap-center'
               >
-                <span className='text-primary mb-2 block text-lg font-semibold '>
-                  My Portfolio
-                </span>
-                <h2 className='font-custom mb-3 text-green-500 text-3xl leading-[1.208] font-bold sm:text-4xl md:text-[40px]'>
-                  My Recent Projects
-                </h2>
-                <p className=' text-center mx-2 dark:text-dark-6'>
-                  The following projects showcase the creative and innovative
-                  solutions I developed for some of my satisfied clients. Each
-                  project reflects my commitment to understanding their unique
-                  needs, delivering high-quality results, and exceeding
-                  expectations.
-                </p>
-              </motion.div>
-            </div>
+                <div className='bg-[#0A0A0A] rounded-3xl overflow-hidden h-[420px] md:h-[480px] group cursor-pointer'>
+                  <div className='relative h-[60%] overflow-hidden'>
+                    <img
+                      alt={project.title}
+                      className='w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500 group-hover:scale-110'
+                      src={project.image}
+                    />
+                    <div className='absolute inset-0 bg-gradient-to-t from-green-500/20 to-transparent'></div>
+                  </div>
+                  <div className='p-6 md:p-8 h-[40%] flex flex-col'>
+                    <h3 className='text-white font-bold text-xl md:text-2xl mb-2'>
+                      {project.title}
+                    </h3>
+                    <p className='text-green-500 text-sm uppercase tracking-wide mb-3'>
+                      {project.client}
+                    </p>
+                    <div className='flex flex-row gap-2 mb-4'>
+                      {project.tags.map((tag, tagIndex) => (
+                        <span
+                          key={tagIndex}
+                          className='text-white text-xs border border-green-500/50 px-3 py-1 rounded-full whitespace-nowrap'
+                        >
+                          {tag}
+                        </span>
+                      ))}
+                    </div>
+                    <a
+                      target='_blank'
+                      href={project.url}
+                      className='text-white text-sm font-medium inline-flex items-center gap-2 mt-auto group/link cursor-pointer whitespace-nowrap relative'
+                    >
+                      VIEW PROJECT
+                      <i className='ri-arrow-right-line group-hover/link:translate-x-1 transition-transform'></i>
+                      <span className='absolute bottom-0 left-0 w-0 h-0.5 bg-green-500 group-hover/link:w-24 transition-all duration-300'></span>
+                    </a>
+                  </div>
+                </div>
+              </div>
+            ))}
           </div>
-
-          <div className='w-full flex flex-wrap justify-center -mx-4'>
-            <div className='w-full px-4'></div>
-          </div>
-          <div className='flex flex-wrap items-center justify-center -mx-4'>
-            {/**  <PortfolioCard
-              ImageHref={img1}
-              category='Video Games E-commerce'
-              title='S.M Games'
-              button='View Details'
-              buttonHref='/details/project-1'
-            />*/}
-
-            {/** <PortfolioCard
-              ImageHref={img2}
-              category='Logistics website'
-              title='Open Flow Logistics'
-              button='View Details'
-              buttonHref='https://openflowlogistics.vercel.app/'
-            />*/}
-            <PortfolioCard
-              ImageHref={"/sitigym.png"}
-              category='GYM Website'
-              title='Siti gym Kampala'
-              button='View Details'
-              buttonHref='https://sitigym.com'
-            />
-            <PortfolioCard
-              ImageHref={"/wiizz.png"}
-              category='GYM Website'
-              title='Wizz gym'
-              button='View Details'
-              buttonHref='https://wizzgym.com'
-            />
-          </div>
-        </div>
-      </section>
-    </>
-  );
-};
-
-export default Portfolio;
-
-const PortfolioCard = ({
-  category,
-  ImageHref,
-  title,
-  button,
-  buttonHref,
-}: any) => {
-  const ref = useRef<HTMLDivElement>(null);
-  const { scrollYProgress } = useScroll({
-    target: ref,
-    offset: ["0 1", "1.1 1"],
-  });
-  const scaleProgress = useTransform(scrollYProgress, [0, 1], [0.8, 1]);
-  const opacityProgress = useTransform(scrollYProgress, [0, 1], [0.5, 1]);
-  return (
-    <>
-      <motion.div
-        ref={ref}
-        style={{
-          scale: scaleProgress,
-          opacity: opacityProgress,
-        }}
-        className={"w-[90%] px-4 md:w-1/2 xl:w-1/3 h-[250px] my-11"}
-      >
-        <div className='relative mb-12'>
-          <div className='overflow-hidden rounded-[10px] h-[200px]'>
-            <img src={ImageHref} alt='portfolio' className='w-full h-[200px]' />
-          </div>
-          <div className='relative z-10 mx-7 -mt-10  rounded-lg bg-gray-800  py-[20px] px-2 text-center '>
-            <span className='text-primary text-green-500 mb-2 block text-sm font-medium'>
-              {category}
-            </span>
-            <h3 className='text-dark dark:text-white mb-5 text-xl font-bold'>
-              {title}
-            </h3>
-            <Link
-              href={buttonHref}
-              className='text-body-color dark:text-dark-6 hover:border-green-500 hover:bg-green-500 inline-block rounded-md border border-stroke border-green-500  py-[10px] px-7 text-sm font-medium transition hover:text-white'
-            >
-              {button}
-            </Link>
+          <div className='flex justify-center gap-2 mt-8 md:mt-10'>
+            {projects.map((_, index) => (
+              <button
+                key={index}
+                onClick={() => scrollToProject(index)}
+                className={`transition-all duration-300 rounded-full cursor-pointer ${
+                  activeIndex === index
+                    ? "w-8 h-3 bg-green-500"
+                    : "w-3 h-3 bg-green-500/30 hover:bg-green-500/50"
+                }`}
+                aria-label={`Go to project ${index + 1}`}
+              ></button>
+            ))}
           </div>
         </div>
-      </motion.div>
-    </>
+      </div>
+    </section>
   );
-};
+}

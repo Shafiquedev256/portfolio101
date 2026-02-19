@@ -4,7 +4,7 @@ import Contact from "./components/contact";
 import FooterSection from "./components/footer";
 import Header from "./components/header";
 import HeroSection from "./components/herosection";
-import Portfolio from "./components/portfolio";
+import ProjectsSection from "./components/portfolio";
 
 export async function generateMetadata(): Promise<Metadata> {
   return {
@@ -15,11 +15,11 @@ export async function generateMetadata(): Promise<Metadata> {
 
 export default function Home() {
   return (
-    <main className='bg-gray-900 min-h-[100vh]'>
+    <main className='bg-gray-900 min-h-[100vh] overflow-y-scroll [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]'>
       <Header />
       <HeroSection />
       <About1 />
-      <Portfolio />
+      <ProjectsSection />
       <Contact />
       <FooterSection />
     </main>

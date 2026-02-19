@@ -21,3 +21,14 @@ body {
     rgba(209, 212, 209, 1) 53%
   );
 }
+
+/* Apply to all elements */
+* {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
+/* For WebKit-based browsers (Chrome, Safari, Opera), use the pseudo-element selector */
+*::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera */
+}
